@@ -5,6 +5,7 @@ import urwid
 
 from widgets.link import Link
 from widgets.listbox import WrappingListBox
+import pyperclip
 
 choices = [
     "http://xkcd.org",
@@ -30,8 +31,12 @@ def menu(choices):
         body.append(urwid.AttrMap(button, None, focus_map={'selected': 'focus_selected', 'unselected': 'focused'}))
     return WrappingListBox(urwid.SimpleFocusListWalker(body))
 
-def exit_program(button):
+
+def exit_program(key):
+    if key == 'c':
+        pyperclip.copy("\n".join(selected))
     raise urwid.ExitMainLoop()
+
 
 def get_help_text():
     commands = {
@@ -48,6 +53,7 @@ def get_help_text():
         urwid.Divider(u"="),
         urwid.Text(unicode(text))
     ])
+
 palette = [
     ('focus_selected', 'white', 'dark red'),
     ('focused', 'light gray', 'dark blue'),

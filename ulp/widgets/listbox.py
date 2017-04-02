@@ -17,4 +17,3 @@ class WrappingListBox(ListBox):
             return None
 
         return ListBox.keypress(self, size, key)
-
