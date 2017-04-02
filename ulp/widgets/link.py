@@ -1,17 +1,20 @@
+# coding=utf-8
 import subprocess
 
 from urwid import Text
 
 SELECTED_PADDING = '|===> '
 
+
 def open_item(choice):
     subprocess.call(['x-www-browser', choice])
+
 
 def do_nothing(text):
     pass
 
-class Link(Text):
 
+class Link(Text):
     def __init__(self, link, on_select=do_nothing, align='left', wrap='space'):
         Text.__init__(self, ('unselected', link), align=align, wrap=wrap)
         self.raw_link = link

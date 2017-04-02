@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# coding=utf-8
 
 import urwid
 
+from urlextract import parse_stdin
 from widgets.link import Link
 from widgets.listbox import WrappingListBox
 import pyperclip
@@ -12,6 +13,8 @@ choices = [
     "http://g1.com.br",
     "http://google.com"
 ]
+
+#choices = parse_stdin()
 
 selected = []
 
