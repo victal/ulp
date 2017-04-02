@@ -1,13 +1,10 @@
 # coding=utf-8
-import subprocess
 
 from urwid import Text
 
 SELECTED_PADDING = '|===> '
 
 
-def open_item(choice):
-    subprocess.call(['x-www-browser', choice])
 
 
 def do_nothing(text):
@@ -28,10 +25,11 @@ class Link(Text):
         if key == ' ':
             self._toggle_selection()
             return None
-        elif key == 'enter':
-            open_item(self.raw_link)
 
         return key
+
+    def get_link(self):
+        return self.raw_link
 
     def _toggle_selection(self):
         self.selected = not self.selected

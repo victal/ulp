@@ -1,69 +1,95 @@
 #!/usr/bin/env python
 # coding=utf-8
+import os
+import subprocess
 
 import urwid
+from urwid import Frame
 
 from urlextract import parse_stdin
 from widgets.link import Link
 from widgets.listbox import WrappingListBox
 import pyperclip
 
-choices = [
-    "http://xkcd.org",
-    "http://g1.com.br",
-    "http://google.com"
-]
-
-#choices = parse_stdin()
-
-selected = []
-
-
-def toggle_selection(link):
-    if link in selected:
-        selected.remove(link)
-    else:
-        selected.append(link)
-
-
-def menu(choices):
-    body = []
-    for c in choices:
-        button = Link(c, toggle_selection)
-
-        body.append(urwid.AttrMap(button, None, focus_map={'selected': 'focus_selected', 'unselected': 'focused'}))
-    return WrappingListBox(urwid.SimpleFocusListWalker(body))
 
 
 def exit_program(key):
-    if key == 'c':
-        pyperclip.copy("\n".join(selected))
     raise urwid.ExitMainLoop()
 
 
-def get_help_text():
-    commands = {
-            'c': 'Copy to clipboard',
-            'Enter': 'Open in browser',
-            'x': 'Command mode',
-            'Space': 'Select'
-    }
-    text = ''
-    for key, value in commands.iteritems():
-        text += "[{}]: {}".format(key, value) + "    "
-    
-    return urwid.Pile([
-        urwid.Divider(u"="),
-        urwid.Text(unicode(text))
-    ])
-
-palette = [
+PALETTE = [
     ('focus_selected', 'white', 'dark red'),
     ('focused', 'light gray', 'dark blue'),
     ('selected', 'white', 'light green'),
     ('unselected', 'black', '')
 ]
-main_menu = urwid.Padding(menu(choices), left=0, right=0)
-help_text = get_help_text()
-main = urwid.Frame(main_menu, footer=help_text)
-urwid.MainLoop(main, palette=palette, unhandled_input=exit_program).run()
+
+
+class Interface(Frame):
+
+    def __init__(self, choices):
+        super(Interface, self).__init__(self._create_body(choices), footer=Interface._get_help_text())
+        self._selected = []
+
+    def keypress(self, size, key):
+        if key == 'c':
+            pyperclip.copy(os.linesep.join(self._selected))
+        elif key == 'enter':
+            self._open_links()
+
+        return Frame.keypress(self, size, key)
+
+    def toggle_selection(self, link):
+        if link in self._selected:
+            self._selected.remove(link)
+        else:
+            self._selected.append(link)
+
+    def _create_body(self, choices):
+        body = []
+        for c in choices:
+            button = Link(c, self.toggle_selection)
+
+            body.append(
+                urwid.AttrMap(button, None, focus_map={'selected': 'focus_selected', 'unselected': 'focused'}))
+        return WrappingListBox(urwid.SimpleFocusListWalker(body))
+
+    @classmethod
+    def _get_help_text(cls):
+        commands = {
+            'c': 'Copy to clipboard',
+            'Enter': 'Open in browser',
+            'x': 'Command mode',
+            'Space': 'Select'
+        }
+        text = ''
+        for key, value in commands.iteritems():
+            text += "[{}]: {}".format(key, value) + "    "
+
+        return urwid.Pile([
+            urwid.Divider(u"="),
+            urwid.Text(unicode(text))
+        ])
+
+    def _open_links(self):
+        if not self._selected:
+            # Open link under cursor
+            link = self.focus.get_focus()[0].get_link()
+            subprocess.call(['x-www-browser', link])
+
+        for link in self._selected:
+            subprocess.call(['x-www-browser', link])
+
+    def run(self):
+        urwid.MainLoop(self, palette=PALETTE, unhandled_input=exit_program).run()
+
+
+if __name__ == '__main__':
+    choices = [
+        "http://xkcd.org",
+        "http://g1.com.br",
+        "http://google.com"
+    ]
+
+    # choices = parse_stdin()
+    Interface(choices).run()
