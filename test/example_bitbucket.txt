@@ -1,0 +1,9 @@
+remote: adding changesets
+remote: adding manifests
+remote: adding file changes
+remote: added 1 changesets with 1 changes to 1 files
+remote: 
+remote: Create pull request for BRANCH:
+remote:   https://bitbucket.org/jmine_team/jmine-tec/pull-requests/new?source=BRANCH&t=1
+remote: 
+
