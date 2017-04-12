@@ -6,11 +6,9 @@ import subprocess
 import urwid
 from urwid import Frame
 
-from urlextract import parse_stdin
-from widgets.link import Link
-from widgets.listbox import WrappingListBox
+from ulp.widgets.link import Link
+from ulp.widgets.listbox import WrappingListBox
 import pyperclip
-
 
 
 def exit_program(key):
@@ -63,18 +61,19 @@ class Interface(Frame):
             'Space': 'Select'
         }
         text = ''
-        for key, value in commands.iteritems():
+        for key, value in commands.items():
             text += "[{}]: {}".format(key, value) + "    "
 
         return urwid.Pile([
-            urwid.Divider(u"="),
-            urwid.Text(unicode(text))
+            urwid.Divider("="),
+            urwid.Text(text)
         ])
 
     def _open_links(self):
         if not self._selected:
             # Open link under cursor
-            link = self.focus.get_focus()[0].get_link()
+            attrmap = self.focus.focus 
+            link = attrmap.original_widget.get_link()
             subprocess.call(['x-www-browser', link])
 
         for link in self._selected:
@@ -82,14 +81,3 @@ class Interface(Frame):
 
     def run(self):
         urwid.MainLoop(self, palette=PALETTE, unhandled_input=exit_program).run()
-
-
-if __name__ == '__main__':
-    choices = [
-        "http://xkcd.org",
-        "http://g1.com.br",
-        "http://google.com"
-    ]
-
-    # choices = parse_stdin()
-    Interface(choices).run()

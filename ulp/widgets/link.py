@@ -5,8 +5,6 @@ from urwid import Text
 SELECTED_PADDING = '|===> '
 
 
-
-
 def do_nothing(text):
     pass
 
