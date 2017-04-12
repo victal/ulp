@@ -14,6 +14,7 @@ pip install git+https://github.com/victal/ulp.git@master
 ## Requirements
 
 Ulp is being developed/used with Python 3.5, but it might just work with **Python > 3.0**
+
 *Copy to clipboard* functionality depends on [Pyperclip](https://github.com/asweigart/pyperclip) and as such you might need to install additional modules for it to work. Check Pyperclip's Readme for details.
 
 
@@ -21,7 +22,7 @@ Ulp is being developed/used with Python 3.5, but it might just work with **Pytho
 
 Simply pipe or redirect the input from which you want to pick the URLs into **ulp**. Yes, just like PathPicker. Yes, it's on purpose.
 
-Example: 
+**Example:**
 
 If you're pushing to a BitBucket repository, for example, the output of `hg push` will give you the URL where you can create a new PR from the branch you just pushed to, so you can do
 
