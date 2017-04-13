@@ -3,12 +3,17 @@
 
 from setuptools import setup
 
+def get_description():
+      with open("README.md") as f:
+            return f.read()
+
 setup(name='ulp',
       version='1.0.0',
       author='Guilherme Victal',
       author_email='guilherme at victal.eti.br',
       url='https://github.com/victal/ulp',
       description='ULP is a Locator Picker - a PathPicker clone for URLs',
+      long_description=get_description(),
       license='MIT',
       packages=['ulp', 'ulp.widgets'],
       requires=['pyperclip', 'urwid'],
@@ -35,11 +40,7 @@ setup(name='ulp',
 
          # Specify the Python versions you support here. In particular, ensure
          # that you indicate whether you support Python 2, Python 3 or both.
-         'Programming Language :: Python :: 2.7',
          'Programming Language :: Python :: 3',
-         'Programming Language :: Python :: 3.2',
-         'Programming Language :: Python :: 3.3',
-         'Programming Language :: Python :: 3.4',
          'Programming Language :: Python :: 3.5',
          ]
       )

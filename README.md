@@ -6,10 +6,19 @@ Think of something like Facebook's [PathPicker](https://github.com/facebook/path
 
 ## Installing
 
-Ulp is a python package and as such it can be installed via pip. Until it's on PyPI, you can try installing it from this repo using
+Ulp is a python package and as such it can be installed via pip. You can install the latest released version with 
+
+```
+pip install -U ulp
+```
+
+and, if you want to install a fresh version from the latest source code *(good luck)*, you can run 
+
 ```
 pip install git+https://github.com/victal/ulp.git@master
 ```
+
+For systems where Python 2.x is the default version, you might need to run the commands above using **pip3** as the executable instead of **pip**.
 
 ## Requirements
 
