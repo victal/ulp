@@ -8,7 +8,7 @@ def get_description():
             return f.read()
 
 setup(name='ulp',
-      version='1.0.0',
+      version='1.0.1',
       author='Guilherme Victal',
       author_email='guilherme at victal.eti.br',
       url='https://github.com/victal/ulp',

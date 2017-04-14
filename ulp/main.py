@@ -4,10 +4,10 @@ import os
 import subprocess
 
 import urwid
-from urwid import Frame
 
 from ulp.widgets.link import Link
 from ulp.widgets.listbox import WrappingListBox
+from ulp.widgets.popup import PopUpDialog, PopUpWrapper
 import pyperclip
 
 
@@ -19,11 +19,12 @@ PALETTE = [
     ('focus_selected', 'white', 'dark red'),
     ('focused', 'light gray', 'dark blue'),
     ('selected', 'white', 'light green'),
-    ('unselected', 'black', '')
+    ('unselected', 'black', ''),
+    ('popup', 'light gray', 'black')
 ]
 
 
-class Interface(Frame):
+class Interface(urwid.Frame):
 
     def __init__(self, choices):
         super(Interface, self).__init__(self._create_body(choices), footer=Interface._get_help_text())
@@ -31,17 +32,25 @@ class Interface(Frame):
 
     def keypress(self, size, key):
         if key == 'c':
-            pyperclip.copy(os.linesep.join(self._selected))
+            self._copy_selected_to_clipboard()
+            return
         elif key == 'enter':
             self._open_links()
 
-        return Frame.keypress(self, size, key)
+        return urwid.Frame.keypress(self, size, key)
 
     def toggle_selection(self, link):
         if link in self._selected:
             self._selected.remove(link)
         else:
             self._selected.append(link)
+    
+    def _copy_selected_to_clipboard(self):
+        try:
+            pyperclip.copy(os.linesep.join(self._selected))
+        except pyperclip.exceptions.PyperclipException as e:
+            self._body.create_popup(urwid.Text(str(e)))
+            
 
     def _create_body(self, choices):
         body = []
@@ -50,7 +59,7 @@ class Interface(Frame):
 
             body.append(
                 urwid.AttrMap(button, None, focus_map={'selected': 'focus_selected', 'unselected': 'focused'}))
-        return WrappingListBox(urwid.SimpleFocusListWalker(body))
+        return PopUpWrapper(WrappingListBox(urwid.SimpleFocusListWalker(body)))
 
     @classmethod
     def _get_help_text(cls):
@@ -80,4 +89,4 @@ class Interface(Frame):
             subprocess.call(['x-www-browser', link])
 
     def run(self):
-        urwid.MainLoop(self, palette=PALETTE, unhandled_input=exit_program).run()
+        urwid.MainLoop(urwid.PopUpTarget(self), palette=PALETTE, unhandled_input=exit_program, pop_ups=True).run()
