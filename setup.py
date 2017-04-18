@@ -13,7 +13,7 @@ def get_description():
 
 
 setup(name='ulp',
-      version='1.0.2',
+      version='1.0.3',
       author='Guilherme Victal',
       author_email='guilherme at victal.eti.br',
       url='https://github.com/victal/ulp',
@@ -21,7 +21,7 @@ setup(name='ulp',
       long_description=get_description(),
       license='MIT',
       packages=['ulp', 'ulp.widgets'],
-      requires=['pyperclip', 'urwid'],
+      install_requires=['pyperclip', 'urwid'],
       scripts=['scripts/ulp'],
       entry_points={
           'console_scripts': [
