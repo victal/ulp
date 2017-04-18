@@ -81,7 +81,7 @@ class Interface(urwid.Frame):
     def _open_links(self):
         if not self._selected:
             # Open link under cursor
-            attrmap = self.focus.focus 
+            attrmap = self.focus.original_widget.focus 
             link = attrmap.original_widget.get_link()
             subprocess.call(['x-www-browser', link])
 
