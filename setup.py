@@ -13,7 +13,7 @@ def get_description():
 
 
 setup(name='ulp',
-      version='1.0.3',
+      version='1.0.4',
       author='Guilherme Victal',
       author_email='guilherme at victal.eti.br',
       url='https://github.com/victal/ulp',
