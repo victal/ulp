@@ -3,13 +3,11 @@
 CACHEDIR="$HOME/.cache/ulp"
 INPUTFILE="$CACHEDIR/links"
 
-if [ -z "$@" ];
-then
-  exit
-fi
-
 mkdir -p $CACHEDIR
 
 ulp_extract "$@" > $INPUTFILE
+if [ "$?" -ne 0 ]; then
+  exit
+fi
 
 ulp_tui < /dev/tty

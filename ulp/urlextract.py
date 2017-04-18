@@ -21,6 +21,10 @@ def read_inputfile():
         return f.readlines()
 
 def main():
+    #If we are not being piped, exit
+    if sys.stdin.isatty():
+        sys.exit(1)
+
     result = parse_stdin()
     for url in result:
         print(url)
