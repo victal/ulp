@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # coding=utf-8
 import os
+import sys
 import subprocess
 
 import urwid
 
-from ulp.widgets.link import Link
+from ulp.widgets.link import Link, do_nothing
 from ulp.widgets.listbox import WrappingListBox
 from ulp.widgets.popup import PopUpDialog, PopUpWrapper
 import pyperclip
@@ -23,12 +24,31 @@ PALETTE = [
     ('popup', 'light gray', 'black')
 ]
 
+COMMANDS = [
+    ('c', 'Copy to clipboard'),
+    ('Enter', 'Open in browser'),
+    ('x', 'Command mode'),
+    ('Space', 'Select'),
+    ('q', 'Exit')
+]
+
+class ClickableLink(Link):
+
+    def __init__(self, link, on_select=do_nothing, align='left', wrap='space'):
+        Link.__init__(self, link=link, on_select=on_select, align=align, wrap=wrap)
+
+    def mouse_event(self, size, event, button, col, row, focus):
+        if event == "mouse press":
+            self._toggle_selection()
+        return True
+
 
 class Interface(urwid.Frame):
 
     def __init__(self, choices):
         super(Interface, self).__init__(self._create_body(choices), footer=Interface._get_help_text())
         self._selected = []
+        self._total_choices = len(choices)
 
     def keypress(self, size, key):
         if key == 'c':
@@ -36,10 +56,15 @@ class Interface(urwid.Frame):
             return
         elif key == 'enter':
             self._open_links()
+            exit_program(key);
+        elif key == 'q':
+            exit_program(key);
 
-        return urwid.Frame.keypress(self, size, key)
+        urwid.Frame.keypress(self, size, key)
+        return key in [cmd[0] for cmd in COMMANDS]
 
     def mouse_event(self, size, event, button, col, row, focus):
+        urwid.Frame.mouse_event(self, size, event, button, col, row, focus)
         return True
 
     def toggle_selection(self, link):
@@ -58,7 +83,7 @@ class Interface(urwid.Frame):
     def _create_body(self, choices):
         body = []
         for c in choices:
-            button = Link(c, self.toggle_selection)
+            button = ClickableLink(c, self.toggle_selection)
 
             body.append(
                 urwid.AttrMap(button, None, focus_map={'selected': 'focus_selected', 'unselected': 'focused'}))
@@ -66,14 +91,8 @@ class Interface(urwid.Frame):
 
     @classmethod
     def _get_help_text(cls):
-        commands = {
-            'c': 'Copy to clipboard',
-            'Enter': 'Open in browser',
-            'x': 'Command mode',
-            'Space': 'Select'
-        }
         text = ''
-        for key, value in commands.items():
+        for key, value in COMMANDS:
             text += "[{}]: {}".format(key, value) + "    "
 
         return urwid.Pile([

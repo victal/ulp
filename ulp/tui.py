@@ -1,4 +1,4 @@
-#!/usr/bi/env python
+#!/usr/bin/env python
 # coding=utf-8
 import sys
 
@@ -9,6 +9,7 @@ from ulp.urlextract import read_inputfile
 def main():
     choices = read_inputfile()
     if len(choices) == 0:
+        print("-" * 44, file=sys.stderr)
         print("No links found in provided input, exiting...")
         sys.exit(1)
 

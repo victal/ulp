@@ -90,3 +90,9 @@ ENV/
 
 #Pycharm files
 .idea/
+
+# Visual Studio Code Files
+.vscode
+
+# 
+tags
