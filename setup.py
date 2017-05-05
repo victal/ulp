@@ -15,7 +15,7 @@ def get_description():
 setup(name='ulp',
       version='1.0.5',
       author='Guilherme Victal',
-      author_email='guilherme at victal.eti.br',
+      author_email='guilherme@victal.eti.br',
       url='https://github.com/victal/ulp',
       description='ULP is a Locator Picker - a PathPicker clone for URLs',
       long_description=get_description(),
