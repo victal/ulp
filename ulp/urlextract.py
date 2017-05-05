@@ -9,7 +9,8 @@ url_regex = re.compile(r"((https?|ftp)://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?)")
 INPUT_FILE = os.path.join(os.getenv('HOME'), '.cache', 'ulp', 'links')
 
 def parse_stdin():
-    stdin = [line for line in sys.stdin]
+    stdin = [line.strip() for line in sys.stdin]
+    print(os.linesep.join(stdin).strip(), file=sys.stderr)
     return parse_input(os.linesep.join(stdin))
 
 def parse_input(text):
