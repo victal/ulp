@@ -39,6 +39,9 @@ class Interface(urwid.Frame):
 
         return urwid.Frame.keypress(self, size, key)
 
+    def mouse_event(self, size, event, button, col, row, focus):
+        return True
+
     def toggle_selection(self, link):
         if link in self._selected:
             self._selected.remove(link)
