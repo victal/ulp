@@ -53,9 +53,6 @@ Ulp is licensed with the [MIT License](https://github.com/victal/ulp/blob/master
 
 ## TODO
 
-* Publish package to PyPI
-* Finish 'Copy to Clipboard' (deal with error dependencies)
-* Add a 'Command mode' similar to fpp
 * Add a 'filter' option within the UI
 * Add an example image/gif in this readme
 * Tidy up - clean up code, ad a --help, tests and clean up code
