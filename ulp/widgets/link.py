@@ -8,7 +8,6 @@ SELECTED_PADDING = '|===> '
 def do_nothing(text):
     pass
 
-
 class Link(Text):
     def __init__(self, link, on_select=do_nothing, align='left', wrap='space'):
         Text.__init__(self, ('unselected', link), align=align, wrap=wrap)
@@ -36,6 +35,17 @@ class Link(Text):
             self.set_text(('selected', SELECTED_PADDING + self.raw_link))
         else:
             self.set_text(('unselected', self.raw_link))
+
+
+class ClickableLink(Link):
+
+    def __init__(self, link, on_select=do_nothing, align='left', wrap='space'):
+        Link.__init__(self, link=link, on_select=on_select, align=align, wrap=wrap)
+
+    def mouse_event(self, size, event, button, col, row, focus):
+        if event == "mouse press":
+            self._toggle_selection()
+        return True
 
 
 

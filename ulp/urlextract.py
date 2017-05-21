@@ -19,7 +19,7 @@ def parse_input(text):
 
 def read_inputfile():
     with open(INPUT_FILE) as f:
-        return f.readlines()
+        return [l.strip() for l in f.readlines()]
 
 def main():
     #If we are not being piped, exit
