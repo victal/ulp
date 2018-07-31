@@ -15,7 +15,7 @@ if [ "$?" -ne 0 ]; then
   exit
 fi
 
-ulp_tui < /dev/tty
+ulp_tui "$@" < /dev/tty
 
 if [ -f "$COMMANDFILE" ]
 then
