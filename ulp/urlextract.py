@@ -14,12 +14,12 @@ def escape_ansi(text):
     return ansi_escape_regex.sub("", text)
 
 def parse_stdin():
-    stdin = [escape_ansi(line.strip()) for line in sys.stdin]
-    print(os.linesep.join(stdin).strip(), file=sys.stderr)
-    return parse_input(os.linesep.join(stdin))
+    lines = [line.strip() for line in sys.stdin]
+    print(os.linesep.join(lines).strip(), file=sys.stderr)
+    return parse_input(os.linesep.join(lines))
 
 def parse_input(text):
-    matches = url_regex.findall(text.strip())
+    matches = url_regex.findall(escape_ansi(text.strip()))
     return [result[0] for result in matches]
 
 def read_inputfile():
