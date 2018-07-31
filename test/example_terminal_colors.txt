@@ -1,2 +1,2 @@
 remote: [38;5;226;48;5;196mhttps://example.org/?p=3707[0m
-remote:   https://example.org/anotherurl
+remote:   https://example.org/anotherurl?q=0m
