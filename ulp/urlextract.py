@@ -6,10 +6,15 @@ import sys
 # Regex for matching URLs
 # See https://mathiasbynens.be/demo/url-regex
 url_regex = re.compile(r"((https?|ftp)://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?)")
+
+ansi_escape_regex = re.compile(r"(\x9B|\x1B\[)[0-?]*[ -/]*[@-~]", re.IGNORECASE)
 INPUT_FILE = os.path.join(os.getenv('HOME'), '.cache', 'ulp', 'links')
 
+def escape_ansi(text):
+    return ansi_escape_regex.sub("", text)
+
 def parse_stdin():
-    stdin = [line.strip() for line in sys.stdin]
+    stdin = [escape_ansi(line.strip()) for line in sys.stdin]
     print(os.linesep.join(stdin).strip(), file=sys.stderr)
     return parse_input(os.linesep.join(stdin))
 
@@ -25,7 +30,7 @@ def main():
     #If we are not being piped, exit
     if sys.stdin.isatty():
         sys.exit(1)
-
+    
     result = parse_stdin()
     for url in result:
         print(url)
