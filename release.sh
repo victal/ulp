@@ -3,6 +3,7 @@
 PIPENV=$(which pipenv)
 
 if [ -z "$PIPENV" ]
+then
     echo "pipenv not found. Install pipenv with 'pip3 install --user pipenv' before running this script"
     exit 1
 fi
