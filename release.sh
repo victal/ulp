@@ -25,10 +25,8 @@ rm -rf build/ dist/
 sed -i "s/'$CURRENT_VERSION'/'$NEXT_VERSION'/g" setup.py
 
 #Generate artifacts
-python setup.py sdist bdist_wheel
-
 #Deploy artifacts
-twine upload dist/*
+python setup.py sdist bdist_wheel upload -r pypi
 
 #Create git tag
 git add setup.py
