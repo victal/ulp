@@ -6,6 +6,7 @@ name = "pypi"
 [dev-packages]
 pudb = "*"
 pytest = "*"
+tox = "*"
 
 [packages]
 pyperclip = "*"
