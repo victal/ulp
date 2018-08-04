@@ -8,7 +8,7 @@ import sys
 url_regex = re.compile(r"((https?|ftp)://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?)")
 
 ansi_escape_regex = re.compile(r"(\x9B|\x1B\[)[0-?]*[ -/]*[@-~]", re.IGNORECASE)
-INPUT_FILE = os.path.join(os.getenv('HOME'), '.cache', 'ulp', 'links')
+INPUT_FILE = os.path.join(os.path.expanduser('~'), '.cache', 'ulp', 'links')
 
 def escape_ansi(text):
     return ansi_escape_regex.sub("", text)
