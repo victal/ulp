@@ -74,7 +74,7 @@ class Interface(urwid.Frame):
     def _copy_selected_to_clipboard(self):
         try:
             pyperclip.copy(os.linesep.join(self.get_links()))
-        except pyperclip.exceptions.PyperclipException as e:
+        except pyperclip.PyperclipException as e:
             self._body.create_popup(urwid.Text(str(e)))
             
     def _create_body(self, choices):

@@ -10,8 +10,8 @@ tox = "*"
 wheel = "*"
 
 [packages]
-pyperclip = "*"
 urwid = "*"
+pyperclip = ">=1.6.0"
 
 [requires]
 python_version = "3.6"

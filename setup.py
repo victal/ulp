@@ -21,7 +21,7 @@ setup(name='ulp',
       long_description=get_description(),
       license='MIT',
       packages=['ulp', 'ulp.widgets'],
-      install_requires=['pyperclip', 'urwid'],
+      install_requires=['pyperclip>=1.6.0', 'urwid'],
       scripts=['scripts/ulp'],
       entry_points={
           'console_scripts': [
